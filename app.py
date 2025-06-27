@@ -7,4 +7,11 @@ from  flask_session import Session
 
 
 app = Flask(__name__)
+app.secret_key='12345678'
+socketio=SocketIO(app, cors_allowed_origins='*', manage_session=True)
 
+
+
+@app.route("/")
+def login():
+    render_template("login.html")
