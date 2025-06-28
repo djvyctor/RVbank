@@ -36,7 +36,7 @@ def login():
         cpf = request.form['cpf']
         password = request.form['password']
         conn = get_db_connection()
-        user = conn.execute('SELECT * from users WHERE nome = ?', (name, )).fetchone()     
+        user = conn.execute('SELECT * FROM users WHERE cpf = ?', (cpf,)).fetchone()    
 
         if user and check_password_hash(user['senha_hash'], password):
             session['user_id'] = user['id']
