@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session, url_for,fl
 from flask_socketio import SocketIO, emit, join_room
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
+import random
 from  flask_session import Session
 
 app = Flask(__name__)
@@ -13,6 +14,15 @@ def get_db_connection():
     conn = sqlite3.connect('./data/database.db')
     conn.row_factory = sqlite3.Row
     return conn
+
+def generate_account_number():
+    """
+    gera um numero de conta randomizado.
+    """
+    number =  random.randint(0,9999)
+    checker = random.randint(0,9)
+
+    return f"{number:04d}-{checker}"
 
 
 @app.route("/",methods=['GET','POST'])
@@ -47,8 +57,14 @@ def register():
         hash_password = generate_password_hash(password)
         conn = get_db_connection() #abrir o uso do banco
 
+
+        while True:
+            account = generate_account_number()
+            exists = conn.execute("SELECT 1 FROM users WHERE conta = ?", (account, )).fetchone()
+            if not exists:
+                break
         try:
-            conn.execute("INSERT INTO users (nome,cpf,senha_hash) VALUES (?,?,?)", (name,cpf,hash_password))
+            conn.execute("INSERT INTO users (nome,cpf,senha_hash, conta) VALUES (?,?,?,?)", (name,cpf,hash_password,account))
             conn.commit()
             flash("registrado")
             return redirect(url_for("login"))
@@ -67,7 +83,9 @@ if __name__ == "__main__":
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 cpf TEXT NOT NULL UNIQUE,
                 nome TEXT NOT NULL,
-                senha_hash TEXT NOT NULL)
+                senha_hash TEXT NOT NULL,
+                conta TEXT NOT NULL UNIQUE)
+
         ''')
 
     conn.commit()
