@@ -1,27 +1,42 @@
-body{
+body {
     margin: 0;
     height: 100vh;
-    
-    background: linear-gradient(to top, gray, white);
-    font-family: 'Courier New', Courier, monospace;
+    background: linear-gradient(to top, #f5f5f7, #ffffff);
+    font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    color: #1d1d1f;
 }
 
-#header-main{
-    min-height: 50px;
-    padding: 30px;
-    align-items: center;
+#header-main {
+    min-height: 64px;
+    padding: 20px 40px;
     display: flex;
     justify-content: space-between;
-    background-color: rgba(10, 10, 10, 0.5);
-    backdrop-filter: blur(2px);
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
-.letter-led {
-    color: #0ff; /* Cor do texto (ciano/azulado) */
-    text-shadow: 
-        0 0 5px #0ff,    /* brilho leve */
-        0 0 10px #0ff,   /* brilho médio */
-        0 0 20px #0ff,   /* brilho mais forte */
-        0 0 40px #0ff;   /* brilho externo */
 
-    font-weight: bold;
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #0071e3;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: #005bb5;
 }

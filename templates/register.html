@@ -12,6 +12,15 @@
         
         <form id="form" method="POST"> 
             <h3>Register</h3>
+             {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for msg in messages %}
+                        <li style="color: red">{{ msg }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
             <label>USER:</label><input name="name" placeholder="usuario">
             <label>CPF:</label><input name="cpf" placeholder="000.000.000-00">
             <label>PASSWORD:</label><input name="password" type="password" placeholder="password">

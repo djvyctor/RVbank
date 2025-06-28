@@ -91,6 +91,7 @@ def main():
         return redirect(url_for('login'))
     
     return render_template("main.html", name=session['user_name'],account=session['user_account'], balance=str(session['user_balance']).replace(".",","))
+
 if __name__ == "__main__":
     conn = get_db_connection()
     

@@ -10,7 +10,16 @@
     
     <form id="form" method="POST">
         <h3>Login</h3>
-        <label>USER:</label><input name='name' placeholder="usuario">
+         {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for msg in messages %}
+                        <li style="color: red">{{ msg }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+       
         <label>CPF:</label><input name='cpf' placeholder="000.000.000">
         <label>PASSWORD:</label><input name='password' placeholder="password">
         <button type="submit">Enviar</button>

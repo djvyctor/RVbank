@@ -10,17 +10,19 @@ web_routes = RoutesWeb()
 
 @web_routes.app.route("/",methods=['GET','POST'])
 def login():
-    web_routes.login_sets(request.method)
+    return web_routes.login_sets(request.method)
 
-    return render_template("login.html")
 
-@web_routes.app.route("/register")
+
+
+@web_routes.app.route("/register",methods=['GET','POST'])
 def register():
-    return render_template("register.html")
-
-
+    return web_routes.register_sets(request.method)
+    
 @web_routes.app.route("/main")
 def main():
-    pass
+    return web_routes.main_sets()
+    
 web_routes.main()
+
 
