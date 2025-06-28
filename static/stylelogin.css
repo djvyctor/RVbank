@@ -1,5 +1,3 @@
-/*  */
-
 body{
     margin: 0;
     height: 100vh;
@@ -10,8 +8,7 @@ body{
     font-family: 'Courier New', Courier, monospace;
 }
 
-
-#box-register{
+#box-login{
     display: grid;
     justify-content: center;
     padding: 20px;

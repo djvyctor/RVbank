@@ -8,11 +8,13 @@
 </head>
 <body>
     <div id="box-register">
+        <h3>Registrar</h3>
         <form id="form" method="POST"> 
-            <label>USER:</label><input name="name" placeholder="usuario">
-            <label>CPF:</label><input name="cpf" placeholder="000.000.000-00">
-            <label>PASSWORD:</label><input name="password" type="password" placeholder="password">
-            <button type="submit">ENVIAR</button>
+            <label>USER:</label><input name="name" placeholder="usuario" required>
+            <label>CPF:</label><input name="cpf" placeholder="000.000.000-00" required>
+            <label>PASSWORD:</label><input name="password" type="password" placeholder="password" required>
+            <button type="submit">Cadastrar</button>
+        <p><a href="{{ url_for('login')}}"> Ja tem uma conta? Entrar </a></p>
         </form>
     </div>
 </body>
