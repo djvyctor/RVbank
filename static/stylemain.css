@@ -1,0 +1,27 @@
+body{
+    margin: 0;
+    height: 100vh;
+    
+    background: linear-gradient(to top, gray, white);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#header-main{
+    min-height: 50px;
+    padding: 30px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(10, 10, 10, 0.5);
+    backdrop-filter: blur(2px);
+}
+.letter-led {
+    color: #0ff; /* Cor do texto (ciano/azulado) */
+    text-shadow: 
+        0 0 5px #0ff,    /* brilho leve */
+        0 0 10px #0ff,   /* brilho médio */
+        0 0 20px #0ff,   /* brilho mais forte */
+        0 0 40px #0ff;   /* brilho externo */
+
+    font-weight: bold;
+}

@@ -10,6 +10,10 @@ app.secret_key='nothing_here'
 socketio=SocketIO(app, cors_allowed_origins='*', manage_session=True)
 
 
+users_conecteds=set()
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
+
 def get_db_connection():
     conn = sqlite3.connect('./data/database.db')
     conn.row_factory = sqlite3.Row
@@ -35,8 +39,13 @@ def login():
         user = conn.execute('SELECT * from users WHERE nome = ?', (name, )).fetchone()     
 
         if user and check_password_hash(user['senha_hash'], password):
-            print("funcionou")
-            flash("usuario existe")
+            session['user_id'] = user['id']
+            session['user_name'] = user['nome']
+            session['user_cpf'] = user['cpf']
+            session['user_account'] = user['conta']
+            session['user_balance'] = user['saldo']
+
+            return redirect(url_for("main"))
         flash("usuario nao existe")
     
     return render_template("login.html")
@@ -54,6 +63,7 @@ def register():
         name = request.form['name']
         cpf = request.form['cpf']
         password = request.form['password']
+        initial_balance = 0.00
         hash_password = generate_password_hash(password)
         conn = get_db_connection() #abrir o uso do banco
 
@@ -64,7 +74,7 @@ def register():
             if not exists:
                 break
         try:
-            conn.execute("INSERT INTO users (nome,cpf,senha_hash, conta) VALUES (?,?,?,?)", (name,cpf,hash_password,account))
+            conn.execute("INSERT INTO users (nome,cpf,senha_hash, conta, saldo) VALUES (?,?,?,?,?)", (name,cpf,hash_password,account,initial_balance))
             conn.commit()
             flash("registrado")
             return redirect(url_for("login"))
@@ -75,6 +85,12 @@ def register():
         
     return render_template("register.html")
 
+@app.route("/main")
+def main():
+    if 'user_id' not in session and 'user_cpf' not in session:
+        return redirect(url_for('login'))
+    
+    return render_template("main.html", name=session['user_name'],account=session['user_account'], balance=str(session['user_balance']).replace(".",","))
 if __name__ == "__main__":
     conn = get_db_connection()
     
@@ -84,7 +100,8 @@ if __name__ == "__main__":
                 cpf TEXT NOT NULL UNIQUE,
                 nome TEXT NOT NULL,
                 senha_hash TEXT NOT NULL,
-                conta TEXT NOT NULL UNIQUE)
+                conta TEXT NOT NULL UNIQUE,
+                saldo REAL)
 
         ''')
 
