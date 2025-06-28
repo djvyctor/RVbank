@@ -1,2 +1,5 @@
 ./venv
-./data
+
+./app.txt
+
+./improvements.py

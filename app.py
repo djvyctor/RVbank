@@ -4,8 +4,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 from  flask_session import Session
 
-
-
 app = Flask(__name__)
 app.secret_key='nothing_here'
 socketio=SocketIO(app, cors_allowed_origins='*', manage_session=True)
@@ -47,7 +45,7 @@ def register():
         cpf = request.form['cpf']
         password = request.form['password']
         hash_password = generate_password_hash(password)
-        conn = get_db_connection()
+        conn = get_db_connection() #abrir o uso do banco
 
         try:
             conn.execute("INSERT INTO users (nome,cpf,senha_hash) VALUES (?,?,?)", (name,cpf,hash_password))
@@ -57,7 +55,7 @@ def register():
         except sqlite3.IntegrityError:
             flash("Já existe um usuario com esse CPF")
         finally:
-            conn.close()
+            conn.close()  #segurança do banco de dados, fechar o banco apos o uso.
         
     return render_template("register.html")
 

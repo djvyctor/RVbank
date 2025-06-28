@@ -1,0 +1,39 @@
+Pontos que precisam de atenção:
+
+1. **Segurança das sessões**:
+   - `app.secret_key='nothing_here'` -> Isso é extremamente inseguro. 
+   A chave secreta deve ser uma string longa e aleatória, armazenada de forma segura (variável de ambiente).
+
+2. **Gerenciamento de sessão**:
+   - O código importa `flask_session` mas não configura. Se for usar, é necessário configurar. 
+   Caso contrário, a sessão padrão do Flask é baseada em cookies, o que é aceitável se a chave secreta for forte.
+
+3. **Validação de dados**:
+   - Não há validação dos dados de entrada (nome, CPF, senha). 
+   Por exemplo, o CPF deve ser validado (formato e dígitos verificadores) e a senha deve ter complexidade mínima.
+
+4. **Mensagens Flash**:
+   - No login, independente de o usuário existir ou não, uma mensagem flash é definida. 
+   Além disso, a lógica atual verifica apenas o nome, não o CPF. O login está sendo feito por nome, o que não é usual. Normalmente, bancos usam CPF ou email.
+
+5. **Estrutura do banco de dados**:
+   - A tabela de usuários está sendo criada no mesmo arquivo da aplicação, o que pode não ser o ideal para organização. 
+   Além disso, faltam campos como telefone, endereço, etc., mencionados no escopo.
+
+6. **Tratamento de erros no login**:
+   - No bloco do login, se o usuário não for encontrado, a mensagem "usuario nao existe" é exibida. 
+   Porém, se o usuário existir mas a senha estiver errada, a mensagem "usuario existe" é exibida 
+   (o que é um problema de segurança, pois revela que o usuário existe). O correto é dar uma mensagem genérica: "Credenciais inválidas".
+
+7. **Fluxo de login**:
+   - Após o login bem-sucedido, não há redirecionamento. Apenas imprime "funcionou" e define uma mensagem flash. 
+   O correto seria definir a sessão e redirecionar para uma página restrita.
+
+8. **Uso do SocketIO**:
+   - O SocketIO está sendo inicializado, mas não está sendo usado em nenhum evento. Se não for usar, pode ser removido.
+
+9. **Debug mode**:
+   - A aplicação está sendo executada em modo debug (`debug=True`). Isso nunca deve ser feito em produção.
+   
+10. **CORS**:
+    - O SocketIO está configurado com `cors_allowed_origins='*'`, o que é perigoso em produção. Deve-se restringir aos domínios que precisam acessar.
