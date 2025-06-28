@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylelogin.css') }}">
     <title>Login</title>
 </head>
 <body>
-    <form method="POST">
-        <input name='name' placeholder="usuario">
-        <input name='cpf' placeholder="000.000.000">
-        <input name='password' placeholder="password">
+    
+    <form id="form" method="POST">
+        <h3>Login</h3>
+        <label>USER:</label><input name='name' placeholder="usuario">
+        <label>CPF:</label><input name='cpf' placeholder="000.000.000">
+        <label>PASSWORD:</label><input name='password' placeholder="password">
         <button type="submit">Enviar</button>
+        <p><a href="{{ url_for('register')}}"> Não tem conta? Cadastre-se</a></p>
     </form>
 
     </body>

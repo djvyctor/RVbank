@@ -7,12 +7,16 @@
     <title>Register</title>
 </head>
 <body>
+    
     <div id="box-register">
+        
         <form id="form" method="POST"> 
+            <h3>Register</h3>
             <label>USER:</label><input name="name" placeholder="usuario">
             <label>CPF:</label><input name="cpf" placeholder="000.000.000-00">
             <label>PASSWORD:</label><input name="password" type="password" placeholder="password">
             <button type="submit">ENVIAR</button>
+            <p><a href="{{ url_for('login')}}"> Ja possui uma conta? Entre</a></p>
         </form>
     </div>
 </body>
