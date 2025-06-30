@@ -1,4 +1,13 @@
 .venv/
-improvements.py
+venv/
+__pycache__/
+*.py[cod]
+*.log
+*.tmp
+*.swp
+*.bak
 .idea/
+.vscode/
 teste.py
+.DS_Store
+Thumbs.db
