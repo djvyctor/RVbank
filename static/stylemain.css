@@ -40,3 +40,29 @@ body {
 .nav-links a:hover {
     color: #005bb5;
 }
+
+
+.box-body{
+    min-width: 150px;
+    max-width: 150px;
+    min-height: 130px;
+    max-height: 130px;
+    border: 1px solid black;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+.box-body:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+
+#sect-main{
+    margin: 50px;
+    padding: 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 35px;
+    justify-content: space-around;
+
+}

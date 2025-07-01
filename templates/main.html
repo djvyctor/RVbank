@@ -16,5 +16,24 @@
            <label>Saldo: <label class="letter-led">{{ balance }}</label></label>
         </div>
     </header>
+    <section id="sect-main">
+       
+    </section>
+
+    <script>
+        const section=document.querySelector("#sect-main")
+        const options_menu = ["A","B","C","D","E","F","G","H"]
+        let number=8
+
+        for (let i=0;i<number;i++){
+            const div=document.createElement("div")
+            div.className="box-body"
+            div.innerHTML = options_menu[i]
+            section.appendChild(div)
+        }
+        console.log(section)
+        
+
+    </script>
 </body>
 </html>
