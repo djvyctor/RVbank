@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylemain.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <header id="header-main"> 
+        <div id="user-data">
+            <label name="user">Usuario: <label class="letter-led">{{ name }}</label></label><br>
+            <label name="account">Conta: <label class="letter-led">{{ account }}</label></label>
+        </div>
+        <div id="bank-data">
+           <label>Saldo: <label class="letter-led">{{ balance }}</label></label>
+        </div>
+    </header>
+    <section id="sect-main">
+       
+    </section>
+
+    <script>
+        const section=document.querySelector("#sect-main")
+        const options_menu = ["A","B","C","D","E","F","G","H"]
+        let number=8
+
+        for (let i=0;i<number;i++){
+            const div=document.createElement("div")
+            div.className="box-body"
+            div.innerHTML = options_menu[i]
+            section.appendChild(div)
+        }
+        console.log(section)
+        
+
+    </script>
+</body>
+</html>
