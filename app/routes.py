@@ -15,7 +15,7 @@ def setup_routes(app):
             conn = DatabaseModules()
             conn = conn.get_db_connection()
             
-            with conn.cursor() as cursor:
+            with conn.cursor() as cursor: #passar para o utils depois
                 cursor.execute("SELECT * FROM users WHERE cpf = %s", (cpf,))
                 user = cursor.fetchone()
             if user and check_password_hash(user['user_password'], password):
@@ -47,7 +47,7 @@ def setup_routes(app):
                         if not cursor.fetchone():
                             break
 
-                with conn.cursor() as cursor:
+                with conn.cursor() as cursor: #passar para o utils depois 
                     cursor.execute(
                         "INSERT INTO users (user_name, cpf, user_password, account, balance) VALUES (%s, %s, %s, %s, %s)",
                         (name, cpf, hash_password, account_number, initial_balance)
