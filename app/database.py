@@ -32,3 +32,20 @@ class DatabaseModules:
             cursorclass=pymysql.cursors.DictCursor
         )
         return conn
+    
+    def get_data(self, data):
+          connection = self.get_db_connection()
+          with connection.cursor() as cursor: #passar para o utils depois
+                cursor.execute("SELECT * FROM users WHERE cpf = %s", (data,))
+                user = cursor.fetchone()
+                return user
+          
+    def update_data(self, new_data, user_cpf):
+        connection = self.get_db_connection()
+        with connection.cursor() as cursor:
+            cursor.execute("UPDATE users SET balance = %s WHERE cpf = %s", (new_data, user_cpf))
+            connection.commit()
+            connection.close()
+        
+        
+         

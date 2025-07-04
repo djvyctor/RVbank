@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from flask_socketio import SocketIO, emit, join_room
-from database import DatabaseModules
+from app.database import DatabaseModules
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.utils import generate_account_number
 
@@ -68,8 +68,48 @@ def setup_routes(app):
         if 'user_id' not in session or 'user_cpf' not in session:
             flash("Você precisa estar logado para acessar esta página.")
             return redirect(url_for('login'))
-
+        conn = DatabaseModules()
+      
+        user = conn.get_data(session['user_cpf'])
+        print(user)
         return render_template("main.html", 
                                name=session['user_name'], 
                                account=session['user_account'], 
-                               balance=str(session['user_balance']).replace(".", ","))
+                               balance=str(user['balance']).replace(".", ","))
+
+    @app.route("/pix", methods=["GET", "POST"])
+    def pix():
+        conn = DatabaseModules()
+        conn = conn.get_db_connection()
+        connection = DatabaseModules()
+        current_user =  connection.get_data(session['user_cpf'])
+        if request.method == "POST":
+            destination_cpf = request.form['pix_key']
+            amount = request.form['amount']
+            user = connection.get_data(destination_cpf)
+            
+            current_balance = current_user['balance']
+            
+            if current_user['balance'] < float(amount):
+                flash("Saldo insuficiente para realizar a transação.")
+                return redirect(url_for('pix'))
+            else:
+                current_balance -= float(amount)
+                connection.update_data(current_balance, session['user_cpf'])
+                if user:
+                    current_balance_destiny = user['balance'] + float(amount)
+                    connection.update_data(current_balance_destiny, destination_cpf)
+                # flash("Transferência realizada com sucesso!")
+                return redirect(url_for('main'))
+
+        if 'user_id' not in session or 'user_cpf' not in session:
+            flash("Você precisa estar logado para acessar esta página.")
+            return redirect(url_for('login'))
+        
+        
+
+        return render_template("pix.html", 
+                               name=session['user_name'], 
+                               account=session['user_account'], 
+                               balance=str(current_user['balance']).replace(".", ","))
+    
